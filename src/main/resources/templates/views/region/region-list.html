@@ -38,7 +38,8 @@
                 <td th:text="${region.code}"></td>
                 <td th:text="${region.name}"></td>
                 <td>
-                    <a th:href="@{/regions/edit(id=${region.id})}" class="btn btn-primary btn-sm" th:text="#{msg.region-list.edit}">Editar</a>
+                    <a th:href="@{/regions/detail(id=${region.id})}" class="btn btn-outline-secondary btn-sm me-1" th:text="#{msg.region-list.viewDetail}"></a>
+                    <a th:href="@{/regions/edit(id=${region.id})}" class="btn btn-primary btn-sm" th:text="#{msg.region-list.edit}"></a>
 
                     <form th:action="@{/regions/delete}" method="post" class="d-inline">
                         <input type="hidden" name="id" th:value="${region.id}" />

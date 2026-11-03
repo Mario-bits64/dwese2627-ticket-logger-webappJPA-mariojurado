@@ -46,6 +46,26 @@ public class RegionController {
         return "views/region/region-list";
     }
 
+    @GetMapping("detail")
+    public String showDetail(@RequestParam("id") Long id, Model model, RedirectAttributes redirectAttributes, Locale locale) {
+        logger.info("Mostrando detalle de la region con id: {}", id);
+        try {
+            Region region = regionDAO.getRegionById(id);
+            if (region == null){
+                String msg = messageSource.getMessage("msg.region-controller.detail.notFound", null, locale);
+                redirectAttributes.addFlashAttribute("errorMessage", msg);
+                return "redirect:/regions";
+            }
+            model.addAttribute("region", region);
+            return "views/region/region-detail";
+        } catch (Exception e){
+            logger.error("Error al obtener el detalle de la region {}: {}", id, e.getMessage(), e);
+            String msg = messageSource.getMessage("msg.region-controller.detail.error", null, locale);
+            redirectAttributes.addFlashAttribute("errorMessage", msg);
+            return "redirect:/regions";
+        }
+    }
+
     @GetMapping("/new")
     public String showNewForm(Model model) {
         logger.info("Mostrando formulario para nueva region.");

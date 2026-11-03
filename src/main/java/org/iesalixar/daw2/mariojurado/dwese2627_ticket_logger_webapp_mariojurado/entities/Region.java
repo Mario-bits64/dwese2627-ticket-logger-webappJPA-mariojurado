@@ -1,12 +1,16 @@
 package org.iesalixar.daw2.mariojurado.dwese2627_ticket_logger_webapp_mariojurado.entities;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name="regions")
 
 /**
  * La clase `Region` representa una entidad que modela una región dentro de la base de datos.
@@ -41,6 +45,8 @@ public class Region {
     // Campo que almacena el identificador único de la región. Este campo suele ser autogenerado
     // por la base de datos, lo que lo convierte en un buen candidato para una clave primaria.
     // No añadimos validación en el ID porque en este caso puede ser nulo al insertarse
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
@@ -48,12 +54,14 @@ public class Region {
     // Ejemplo: "01" para Andalucía.
     @NotEmpty(message = "{msg.region.code.notEmpty}")
     @Size(max = 2, message = "{msg.region.code.size}")
+    @Column(name="code", nullable = false, length = 2)
     private String code;
 
 
     // Campo que almacena el nombre completo de la región, como "Andalucía" o "Cataluña".
     @NotEmpty(message = "{msg.region.name.notEmpty}")
     @Size(max = 100, message = "{msg.region.name.notEmpty}")
+    @Column(name="name", nullable = false, length = 100)
     private String name;
 
 
@@ -68,6 +76,16 @@ public class Region {
         this.code = code;
         this.name = name;
     }
+
+    @OneToMany(
+            mappedBy = "region",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL},
+            orphanRemoval = false
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Province> provinces = new ArrayList<>();
 }
 
 
