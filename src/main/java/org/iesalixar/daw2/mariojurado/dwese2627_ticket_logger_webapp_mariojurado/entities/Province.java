@@ -1,13 +1,9 @@
 package org.iesalixar.daw2.mariojurado.dwese2627_ticket_logger_webapp_mariojurado.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.AssertTrue;
 
 
 @Entity
@@ -40,19 +36,14 @@ public class Province {
     private Long id;
 
     // Código único de la provincia (VARCHAR(10) NOT NULL UNIQUE).
-    @NotEmpty(message = "{msg.province.code.notEmpty}")
-    @Size(max = 10, message = "{msg.province.code.size}")
     @Column(name="code", nullable = false, length = 2)
     private String code;
 
     // Nombre de la provincia (VARCHAR(100) NOT NULL).
-    @NotEmpty(message = "{msg.province.name.notEmpty}")
-    @Size(max = 100, message = "{msg.province.name.size}")
     @Column(name="name", nullable = false, length = 100)
     private String name;
 
-    // Region asociada (puede venir instanciada pero con id null) por eso necesita una validación derivada
-    @NotNull(message = "{msg.province.region.notNull}")
+    // Región asociada a la provincia.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;

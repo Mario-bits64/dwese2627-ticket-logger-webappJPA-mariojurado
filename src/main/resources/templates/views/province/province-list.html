@@ -30,10 +30,10 @@
         <table class="table table-bordered table-striped mt-3">
             <thead>
             <tr>
-                <th th:text="#{msg.province-list.id}"></th>
-                <th th:text="#{msg.province-list.code}"></th>
-                <th th:text="#{msg.province-list.name}"></th>
-                <th th:text="#{msg.province-list.region}"></th>
+                <th><a th:href="@{/provinces(page=${currentPage},size=${pageSize},sortField='id',sortDir=${reverseSortDir})}" th:text="|#{msg.province-list.id} ${sortField == 'id' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|"></a></th>
+                <th><a th:href="@{/provinces(page=${currentPage},size=${pageSize},sortField='code',sortDir=${reverseSortDir})}" th:text="|#{msg.province-list.code} ${sortField == 'code' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|"></a></th>
+                <th><a th:href="@{/provinces(page=${currentPage},size=${pageSize},sortField='name',sortDir=${reverseSortDir})}" th:text="|#{msg.province-list.name} ${sortField == 'name' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|"></a></th>
+                <th><a th:href="@{/provinces(page=${currentPage},size=${pageSize},sortField='regionName',sortDir=${reverseSortDir})}" th:text="|#{msg.province-list.region} ${sortField == 'regionName' ? (sortDir == 'asc' ? '▲' : '▼') : ''}|"></a></th>
                 <th th:text="#{msg.province-list.actions}"></th>
             </tr>
             </thead>
@@ -43,8 +43,9 @@
                 <td th:text="${province.code}"></td>
                 <td th:text="${province.name}"></td>
                 <!-- Nombre de la Comunidad Autónoma asociada -->
-                <td th:text="${province.region != null ? province.region.name : ''}"></td>
+                <td th:text="${province.regionName}"></td>
                 <td>
+                    <a th:href="@{/provinces/detail(id=${province.id})}" class="btn btn-outline-secondary btn-sm" th:text="#{msg.province-list.viewDetail}"></a>
                     <!-- Editar -->
                     <a th:href="@{/provinces/edit(id=${province.id})}"
                        class="btn btn-primary btn-sm"
@@ -62,6 +63,15 @@
             </tr>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-3" th:if="${totalPages > 0}">
+            <span th:text="#{msg.pagination.info(${currentPage + 1}, ${totalPages}, ${totalElements})}"></span>
+            <nav th:aria-label="#{msg.pagination.aria.label}"><ul class="pagination mb-0">
+                <li class="page-item" th:classappend="${currentPage == 0} ? ' disabled'"><a class="page-link" th:href="@{/provinces(page=${currentPage - 1},size=${pageSize},sortField=${sortField},sortDir=${sortDir})}" th:aria-label="#{msg.pagination.prev}">&laquo;</a></li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? ' active'"><a class="page-link" th:text="${i + 1}" th:href="@{/provinces(page=${i},size=${pageSize},sortField=${sortField},sortDir=${sortDir})}"></a></li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? ' disabled'"><a class="page-link" th:href="@{/provinces(page=${currentPage + 1},size=${pageSize},sortField=${sortField},sortDir=${sortDir})}" th:aria-label="#{msg.pagination.next}">&raquo;</a></li>
+            </ul></nav>
+        </div>
 
         <!-- Volver -->
         <a th:href="@{/}" class="btn btn-secondary" th:text="#{msg.province-form.returnback}"></a>

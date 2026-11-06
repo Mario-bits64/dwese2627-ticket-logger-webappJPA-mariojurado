@@ -374,6 +374,66 @@ main.list-page {
 }
 
 
+/* =========================================================
+  DETALLES DE REGIONES Y PROVINCIAS
+  ========================================================= */
+.detail-page {
+    align-items: flex-start;
+}
+
+
+.detail-card {
+    max-width: 900px;
+    text-align: left;
+}
+
+
+.detail-card h1 {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+
+.detail-section {
+    padding: 1.25rem;
+    border: 1px solid #e3e6e9;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+
+.detail-section h2 {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+
+.detail-fields {
+    margin-bottom: 0;
+    text-align: left;
+}
+
+
+.detail-fields dt,
+.detail-fields dd {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+
+.detail-fields dt:last-of-type,
+.detail-fields dd:last-of-type {
+    border-bottom: 0;
+}
+
+
+.detail-card .btn-secondary {
+    min-width: 180px;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .list-card {
