@@ -52,6 +52,7 @@
                 <!-- Selector de idioma -->
                 <form method="get" class="d-lg-flex align-items-center me-3">
                     <label for="langSelect" class="visually-hidden">Idioma</label>
+                    <input th:if="${detailId != null}" type="hidden" name="id" th:value="${detailId}">
                     <select id="langSelect" name="lang" class="form-select form-select-sm"
                             onchange="this.form.submit()">
                         <option value="es" th:selected="${#locale.language == 'es'}">Español</option>
